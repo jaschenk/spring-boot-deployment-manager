@@ -1,0 +1,11 @@
+[Unit]
+Description=deploymentManager
+After=syslog.target
+
+[Service]
+User=tcadminx
+ExecStart=/opt/springboot/deploymentManager/deploymentManager.jar
+SuccessExitStatus=143
+
+[Install]
+WantedBy=multi-user.target
