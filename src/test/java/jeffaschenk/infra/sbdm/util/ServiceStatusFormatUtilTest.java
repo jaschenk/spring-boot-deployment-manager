@@ -26,14 +26,11 @@ public class ServiceStatusFormatUtilTest {
         " ● claimService.service - claimService Loaded: loaded (/etc/systemd/system/claimService.service; enabled; vendor preset: disabled) Active: active (running) " +
                 "since Tue 2019-09-17 15:38:07 PDT; 4 weeks 2 days ago " +
                 "Main PID: 25967 (claimService.ja) " +
-                "Tasks: 43 CGroup: /system.slice/claimService.service " +
-                "├─25967 /bin/bash /opt/springboot/claimService/claimService.jar " +
+                "Tasks: 43 CGroup: /system.slice/testService.service " +
+                "├─25967 /bin/bash /opt/springboot/testService/testService.jar " +
                 "└─25985 /usr/bin/java -Dsun.misc.URLClassPath.disableJarChecking=true " +
-                "-Divr.service.request.token=6Z3DD6aQ8MY38L4hcFnG " +
-                "-DclaimService.jdbc.username=eosuserx " +
-                "-DclaimService.jdbc.password=123456789A " +
-                "-DclaimService.jdbc.url=jdbc:sqlserver://facetsstg2;instanceName=facetsstg02;databaseName=facets;sendStringParametersAsUnicode=false " +
-                "-jar /opt/springboot/claimService/claimService.jar";
+                "-Dinfo,xyz=foobar " +
+                "-jar /opt/springboot/testService/testService.jar";
 
 
     private static final String EXAMPLE_SERVICE_STATUS_RESPONSE_TWO =
@@ -44,18 +41,18 @@ public class ServiceStatusFormatUtilTest {
                     "    Tasks: 43\n" +
                     "   CGroup: /system.slice/deploymentManager.service\n" +
                     "           ├─27455 /bin/bash /opt/springboot/deploymentManager/deploymentManager.jar\n" +
-                    "           └─27470 /usr/bin/java -Dsun.misc.URLClassPath.disableJarChecking=true -Dcom.managecat.console.agent.groupname=STG2 -jar /opt/springboot/deploymentManager/deploymentManager.jar\n" +
+                    "           └─27470 /usr/bin/java -Dsun.misc.URLClassPath.disableJarChecking=true -Dgroupname=DEV -jar /opt/springboot/deploymentManager/deploymentManager.jar\n" +
                     "\n" +
-                    "Oct 18 05:57:14 rh-stg2-01.pdx.odshp.com deploymentManager.jar[27455]: 2019-10-18 05:57:14.940  INFO 27470 --- [trap-executor-0] c.n.d.s.r.a.ConfigClusterResolver        : Resolving eureka endpoints via configuration\n" +
-                    "Oct 18 06:02:14 rh-stg2-01.pdx.odshp.com deploymentManager.jar[27455]: 2019-10-18 06:02:14.941  INFO 27470 --- [trap-executor-0] c.n.d.s.r.a.ConfigClusterResolver        : Resolving eureka endpoints via configuration\n" +
-                    "Oct 18 06:07:14 rh-stg2-01.pdx.odshp.com deploymentManager.jar[27455]: 2019-10-18 06:07:14.941  INFO 27470 --- [trap-executor-0] c.n.d.s.r.a.ConfigClusterResolver        : Resolving eureka endpoints via configuration\n" +
-                    "Oct 18 06:12:14 rh-stg2-01.pdx.odshp.com deploymentManager.jar[27455]: 2019-10-18 06:12:14.942  INFO 27470 --- [trap-executor-0] c.n.d.s.r.a.ConfigClusterResolver        : Resolving eureka endpoints via configuration\n" +
-                    "Oct 18 06:17:14 rh-stg2-01.pdx.odshp.com deploymentManager.jar[27455]: 2019-10-18 06:17:14.943  INFO 27470 --- [trap-executor-0] c.n.d.s.r.a.ConfigClusterResolver        : Resolving eureka endpoints via configuration\n" +
-                    "Oct 18 06:22:14 rh-stg2-01.pdx.odshp.com deploymentManager.jar[27455]: 2019-10-18 06:22:14.944  INFO 27470 --- [trap-executor-0] c.n.d.s.r.a.ConfigClusterResolver        : Resolving eureka endpoints via configuration\n" +
-                    "Oct 18 06:27:14 rh-stg2-01.pdx.odshp.com deploymentManager.jar[27455]: 2019-10-18 06:27:14.945  INFO 27470 --- [trap-executor-0] c.n.d.s.r.a.ConfigClusterResolver        : Resolving eureka endpoints via configuration\n" +
-                    "Oct 18 06:32:14 rh-stg2-01.pdx.odshp.com deploymentManager.jar[27455]: 2019-10-18 06:32:14.946  INFO 27470 --- [trap-executor-0] c.n.d.s.r.a.ConfigClusterResolver        : Resolving eureka endpoints via configuration\n" +
-                    "Oct 18 06:37:14 rh-stg2-01.pdx.odshp.com deploymentManager.jar[27455]: 2019-10-18 06:37:14.947  INFO 27470 --- [trap-executor-0] c.n.d.s.r.a.ConfigClusterResolver        : Resolving eureka endpoints via configuration\n" +
-                    "Oct 18 06:42:14 rh-stg2-01.pdx.odshp.com deploymentManager.jar[27455]: 2019-10-18 06:42:14.948  INFO 27470 --- [trap-executor-0] c.n.d.s.r.a.ConfigClusterResolver        : Resolving eureka endpoints via configuration";
+                    "Oct 18 05:57:14 xyz-dev-01 deploymentManager.jar[27455]: 2019-10-18 05:57:14.940  INFO 27470 --- [trap-executor-0] c.n.d.s.r.a.ConfigClusterResolver        : Resolving eureka endpoints via configuration\n" +
+                    "Oct 18 06:02:14 xyz-dev-01 deploymentManager.jar[27455]: 2019-10-18 06:02:14.941  INFO 27470 --- [trap-executor-0] c.n.d.s.r.a.ConfigClusterResolver        : Resolving eureka endpoints via configuration\n" +
+                    "Oct 18 06:07:14 xyz-dev-01 deploymentManager.jar[27455]: 2019-10-18 06:07:14.941  INFO 27470 --- [trap-executor-0] c.n.d.s.r.a.ConfigClusterResolver        : Resolving eureka endpoints via configuration\n" +
+                    "Oct 18 06:12:14 xyz-dev-01 deploymentManager.jar[27455]: 2019-10-18 06:12:14.942  INFO 27470 --- [trap-executor-0] c.n.d.s.r.a.ConfigClusterResolver        : Resolving eureka endpoints via configuration\n" +
+                    "Oct 18 06:17:14 xyz-dev-01 deploymentManager.jar[27455]: 2019-10-18 06:17:14.943  INFO 27470 --- [trap-executor-0] c.n.d.s.r.a.ConfigClusterResolver        : Resolving eureka endpoints via configuration\n" +
+                    "Oct 18 06:22:14 xyz-dev-01 deploymentManager.jar[27455]: 2019-10-18 06:22:14.944  INFO 27470 --- [trap-executor-0] c.n.d.s.r.a.ConfigClusterResolver        : Resolving eureka endpoints via configuration\n" +
+                    "Oct 18 06:27:14 xyz-dev-01 deploymentManager.jar[27455]: 2019-10-18 06:27:14.945  INFO 27470 --- [trap-executor-0] c.n.d.s.r.a.ConfigClusterResolver        : Resolving eureka endpoints via configuration\n" +
+                    "Oct 18 06:32:14 xyz-dev-01 deploymentManager.jar[27455]: 2019-10-18 06:32:14.946  INFO 27470 --- [trap-executor-0] c.n.d.s.r.a.ConfigClusterResolver        : Resolving eureka endpoints via configuration\n" +
+                    "Oct 18 06:37:14 xyz-dev-01 deploymentManager.jar[27455]: 2019-10-18 06:37:14.947  INFO 27470 --- [trap-executor-0] c.n.d.s.r.a.ConfigClusterResolver        : Resolving eureka endpoints via configuration\n" +
+                    "Oct 18 06:42:14 xyz-dev-01 deploymentManager.jar[27455]: 2019-10-18 06:42:14.948  INFO 27470 --- [trap-executor-0] c.n.d.s.r.a.ConfigClusterResolver        : Resolving eureka endpoints via configuration";
 
 
     private static final String EXAMPLE_SERVICE_SHOW_RESPONSE_ONE =

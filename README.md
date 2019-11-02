@@ -2,16 +2,18 @@
 This Service Application named the Spring Boot Deployment Manager will provide a utility functions to all new versions of
 running Spring Boot Service instances to be deployed and maintained.
 
-The Deployment Manager runs on a well known port for our Enterprise at **8762**.
+The Deployment Manager runs on a well known port for our Enterprise at **8762**.  BUt can be overridden using statdard spring.port definition.
+
+## Upon running the Deployment Manager
 
 The Deployment Manager has several endpoints, these are:
 
 - Deployment Manager UI -- Available from your desktop browser
-   - UI available at: **http://rh-stg2-01:8762/deploymentManager/** 
+   - UI available at: **http://localhost:8762/deploymentManager/** 
      is the Deployment Manager end point on Staging 2. 
    
 - Deployment Manager REST Interface -- Available for interfacing from Azure DevOps or other automation framework.
-   - REST Interface available at: **http://rh-stg2-01:8762/deploymentManager/api/**    
+   - REST Interface available at: **http:/localhost:8762/deploymentManager/api/**    
 
 ## UI
 The following outlines the initial Deployment Manager Page:
@@ -135,4 +137,6 @@ layer for this Deployment Manager's UI and API facilities.
 ----
 ## Errata
 
-- None at this time.
+* Output formatting for Configuration can still yield ill formatted text.
+* No removal of Archive artifact files.  This would be a manual or scripted process.
+* During Deployment spinner overlay allows 'refresh' & 'services' buttons as active.
