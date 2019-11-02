@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Moda Services Deployment Manager -- Service Status</title>
+    <link rel="shortcut icon" th:href="@{/images/favicon-spring-leaf.png}" type="image/x-icon"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+          integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous"/>
+    <link rel="stylesheet" th:href="@{/css/shards.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/additions.css}"/>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('#deployment').click(function () {
+                $("div.spanner").addClass("show");
+                $("div.overlay").addClass("show");
+            });
+        });
+    </script>
+</head>
+<body>
+<img th:src="@{/images/springboot.png}" width="172" height="63" alt="SpringBoot"/>
+<br/>
+<h2 style="color:blue;">Services Deployment Manager</h2>
+<h6 th:text="${hostInfoLong}"></h6>
+<hr/>
+<div>
+    <p class="my-5"><a href="/deploymentManager" class="btn btn-primary">Services<i class="fas fa-th-list ml-2"></i></a>
+        <a th:href="@{/status/{serviceName}(serviceName=${serviceName})}" class="btn btn-primary">Refresh<i
+                class="fas fa-signal ml-2"></i></a>
+    </p>
+</div>
+<div th:if="${status != null and status?.get() != null and status?.get()?.getServiceName() != null}" class="container-fluid">
+<p>
+<b><i>Service Actions</i></b><br/>
+<a th:href="@{/events/{serviceName}(serviceName=${status.get().getServiceName()})}"
+   data-toggle="tooltip" title="Show Latest Deployment Events for Service."
+   class="btn btn-info btn-sm">Events<i class="fas fa-th-list ml-2"></i></a>
+<a th:href="@{/configuration/{serviceName}(serviceName=${status.get().getServiceName()})}"
+       data-toggle="tooltip" title="Show Configuration Properties for Service."
+       class="btn btn-info btn-sm">Configuration<i class="fas fa-th-list ml-2"></i></a>
+<!--
+<a th:href="@{/journal/{serviceName}(serviceName=${status.get().getServiceName()})}"
+       data-toggle="tooltip" title="Show Journal (log) for Service, last 1000 Lines."
+       class="btn btn-info btn-sm">Journal<i class="fas fa-th-list ml-2"></i></a>
+-->
+<span th:if="${status.get().getServiceName() != 'eureka' and status.get().getServiceName() != 'deploymentManager'}">
+                                <span th:if="${status.get().getServiceDeploymentStatus().name().toUpperCase() != 'ACTIVE'}">
+                                    <a th:href="@{/start/{serviceName}(serviceName=${status.get().getServiceName()})}"
+                                       data-toggle="tooltip" title="Start the Service previously Deployed."
+                                       class="btn btn-success btn-sm">Start<i class="fas fa-check ml-2"></i></a>
+                                    <a th:href="@{/stop/{serviceName}(serviceName=${status.get().getServiceName()})}"
+                                       data-toggle="tooltip" title="Stop the running service."
+                                       class="disabled isDisabled btn btn-danger btn-sm">Stop<i class="fas fa-power-off ml-2"></i></a>
+                                </span>
+                                 <span th:if="${status.get().getServiceDeploymentStatus().name().toUpperCase() == 'ACTIVE'}">
+                                    <a th:href="@{/start/{serviceName}(serviceName=${status.get().getServiceName()})}"
+                                       data-toggle="tooltip" title="Start the Service previously Deployed."
+                                       class="disabled isDisabled btn btn-success btn-sm">Start<i class="fas fa-check ml-2"></i></a>
+                                    <a th:href="@{/stop/{serviceName}(serviceName=${status.get().getServiceName()})}"
+                                       data-toggle="tooltip" title="Stop the running service."
+                                       class="btn btn-danger btn-sm">Stop<i class="fas fa-power-off ml-2"></i></a>
+                                 </span>
+                                    <a th:href="@{/clean/{serviceName}(serviceName=${status.get().getServiceName()})}"
+                                       data-toggle="tooltip"
+                                       title="Clean up Service Directory prior to Uploading New Artifacts for subsequent Upload and Deployment."
+                                       class="btn btn-primary btn-sm">Clean<i class="fas fa-cog ml-2"></i></a>
+                                    <a th:href="@{/upload/{serviceName}(serviceName=${status.get().getServiceName()})}"
+                                       data-toggle="tooltip"
+                                       title="Upload the 'new' Artifacts for subsequent Deployment."
+                                       class="btn btn-secondary btn-sm">Upload<i class="fas fa-file ml-2"></i></a>
+                                    <a id="deployment" th:href="@{/deploy/{serviceName}(serviceName=${status.get().getServiceName()})}"
+                                       data-toggle="tooltip" title="Deploy the 'new' Artifacts previously Uploaded."
+                                       class="btn btn-warning btn-sm">Deploy<i class="fas fa-cog ml-2"></i></a>
+                                    </span><br/>
+</p>
+</div>
+<div th:if="${message}">
+    <h2 style="color:darkred;" th:text="${message}"/>
+</div>
+<div th:if="${status?.get()}" class="container-fluid">
+    <div class="row">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title"><span style="color:blue;" th:text="${serviceName}"></span></h4>
+                    <p class="card-text">
+                    <!--<b>Service Name:&nbsp;</b>&nbsp;<span th:text="${status.get().getServiceName()}"></span>-->
+                    <!--<b>Status:&nbsp;</b>&nbsp;<span th:text="${status.get().getServiceDeploymentStatus()}"></span><br/>-->
+                    <b>Service Directory Path:&nbsp;</b>&nbsp;<span
+                        th:text="${status.get().getServiceDirectoryPath()}"></span><br/>
+                    <div th:switch="${previousActionStatus}">
+                        <p th:case="null"></p>
+                        <p th:case="*"><b>Last Action:&nbsp;</b> <span th:text="${previousActionStatus}"></span><br/>
+                        </p>
+                    </div>
+                    <div th:switch="${status?.get()?.getDeploymentMessageStatus()}">
+                        <p th:case="null"></p>
+                        <p th:case="*"><b>Deployment Status:&nbsp;</b> <span th:text="${previousActionStatus}"></span><br/>
+                        </p>
+                    </div>
+                    <span th:utext="${status.get().getBadge()}"></span>
+                    <b>Last Status Response:&nbsp;</b>
+                    <span th:utext="${status.get().getOsTransientCommandResponse()}"></span><br/><br/>
+                </div>
+            </div>
+
+            <div th:switch="${status.get().getServiceFiles()}" class="container-fluid">
+                <div class="card">
+                    <div class="card-body">
+                        <b>Service Directory Files</b>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h2 th:case="null" style="color:palevioletred;">>No Service Files Available</h2>
+                                <div th:case="*">
+                                    <table class="table table-striped table-responsive-md">
+                                        <thead>
+                                        <tr>
+                                            <th>Service File Path</th>
+                                            <th>Last Modified</th>
+                                            <th>Size</th>
+                                            <th>Download</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr th:each="serviceFile : ${status.get().getServiceFiles()}">
+                                            <td th:text="${serviceFile.getServiceFilePath()}"></td>
+                                            <td th:text="${serviceFile.getLastModified()}"></td>
+                                            <td th:text="${serviceFile.getSize()}"></td>
+                                            <td><a th:href="${serviceFile.href}" th:text="${serviceFile.hrefText}"
+                                                   class="btn btn-secondary btn-sm"><i class="fas fa-download ml-2"></i></a>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+<div th:if="${status == null or status?.get() == null or status?.get()?.getServiceName() == null}" class="container-fluid">
+    <h2 style="color:palevioletred;">No Status Available</h2>
+</div>
+<div class="overlay"></div>
+<div class="spanner">
+    <div class="loader"></div>
+    <p>Performing Service Deployment ...</p>
+</div>
+</body>
+</html>

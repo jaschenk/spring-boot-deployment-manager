@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="warn">
+	<Appenders>
+
+		<!-- Simple Console Appender -->
+		<Console name="STDOUT" follow="true" target="SYSTEM_OUT">
+			<PatternLayout pattern="%d{yyyy/MM/dd HH:mm:ss.SSS} [%t] %highlight{%level}{FATAL=bg_red, ERROR=red, WARN=yellow, INFO=green, DEBUG=blue} - %msg%n %-5level %logger{36} - %msg%n"/>
+		</Console>
+
+		<!-- Standard Application File Logging -->
+		<RollingFile name="app" fileName="target/test_app.log"
+					 filePattern="target/test_app-%d{yyyy-MM-dd}-%i.log">
+			<PatternLayout>
+				<pattern>%d{yyyy/MM/dd HH:mm:ss.SSS} %p [%t] %c{1}.%M(%L) %m%n</pattern>
+			</PatternLayout>
+			<Policies>
+				<TimeBasedTriggeringPolicy />
+				<SizeBasedTriggeringPolicy size="1 MB" />
+			</Policies>
+			<DefaultRolloverStrategy max="64"/>
+		</RollingFile>
+
+	</Appenders>
+
+	<Loggers>
+		<Root level="info">
+			<AppenderRef ref="app"/>
+			<AppenderRef ref="STDOUT"/>
+		</Root>
+	</Loggers>
+</Configuration>

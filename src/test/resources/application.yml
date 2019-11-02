@@ -1,0 +1,59 @@
+spring:
+    application:
+        name: deploymentManager
+    servlet:
+        multipart:
+            max-file-size: 1GB
+            max-request-size: 1GB
+    # Spring Boot Admin Client URL
+    boot:
+        admin:
+            client:
+                url: http://localhost:8761/admin/
+                enabled: false
+#
+eureka:
+    client:
+        enabled: false
+        healthcheck:
+            enabled: false
+        serviceUrl:
+            defaultZone: http://localhost:8761/eureka
+#
+# Define our Server Port as well-known port for our service application
+server:
+    port: 0
+    servlet:
+        context-path: /deploymentManager
+    error:
+        include-stacktrace: always
+        include-exception: true
+#
+info:
+    app:
+        description: Moda Deployment Manager (springboot)
+        name: deploymentManager
+        version: 1.0.0
+    java:
+        version: ${java.specification.version}
+management:
+    endpoints:
+        web:
+            exposure:
+                exclude: flyway,liquibase
+                include: '*'
+            base-path: /actuator
+    endpoint:
+        health:
+            show-details: ALWAYS
+    info:
+        git:
+            mode: full
+#
+# Deployment Manager specifics
+deployment:
+    manager:
+        owner: tcadminx
+        sa:
+            dir: ${java.io.tmpdir}/springboot-dm-test
+#

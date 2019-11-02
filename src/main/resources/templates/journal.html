@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Moda Services Deployment Manager Events</title>
+    <link rel="shortcut icon" th:href="@{/images/favicon-spring-leaf.png}" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+          integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous" />
+    <link rel="stylesheet" th:href="@{/css/shards.min.css}" />
+</head>
+<body>
+<img th:src="@{/images/springboot.png}" width="172" height="63" alt="SpringBoot"/>
+<br/>
+<h2 style="color:blue;">Services Deployment Manager -- Journal (Service Log)</h2>
+<h6 th:text="${hostInfoLong}"></h6>
+<hr/>
+<div>
+    <p class="my-5"><a href="/deploymentManager" class="btn btn-primary">Services<i class="fas fa-th-list ml-2"></i></a>
+        <span th:if="${serviceName}">
+        <a th:href="@{/status/{serviceName}(serviceName=${serviceName})}" class="btn btn-primary">
+            <span th:text="${serviceName}"></span><i class="fas fa-signal ml-2"></i></a>
+        </span>
+    </p>
+</div>
+<div th:switch="${journal}" class="container-fluid">
+    <div class="row">
+        <div class="col-md-6">
+            <h2 th:case="null" style="color:palevioletred;">No Journal Available</h2>
+            <div th:case="*">
+                <p th:utext="${journal}"></p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

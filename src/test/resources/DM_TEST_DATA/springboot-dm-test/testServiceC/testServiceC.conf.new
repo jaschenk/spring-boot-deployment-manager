@@ -1,0 +1,2 @@
+# Original Test Configuration
+JAVA_OPTS=-DNEW.PROPERTY=true
