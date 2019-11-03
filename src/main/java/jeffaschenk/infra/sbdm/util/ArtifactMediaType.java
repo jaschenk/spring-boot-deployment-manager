@@ -3,7 +3,7 @@ package jeffaschenk.infra.sbdm.util;
 import org.apache.tika.Tika;
 
 /**
- * ModaFaxMediaType
+ * ArtifactMediaType
  *
  * @author jaschenk
  */

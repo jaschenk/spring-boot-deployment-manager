@@ -31,7 +31,7 @@ server:
 #
 info:
     app:
-        description: Moda Deployment Manager (springboot)
+        description: Sping Boot Deployment Manager
         name: deploymentManager
         version: 1.0.0
     java:

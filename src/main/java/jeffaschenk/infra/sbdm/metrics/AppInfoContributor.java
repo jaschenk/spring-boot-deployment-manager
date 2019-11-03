@@ -87,7 +87,7 @@ public class AppInfoContributor implements InfoContributor {
          */
         Map<String, AppMetric> metrics = new TreeMap<>();
         metrics.putAll(applicationMetrics);
-        builder.withDetail("ModaAppDetails", metrics);
+        builder.withDetail("DeploymentManagerAppDetails", metrics);
     }
 
     /**
