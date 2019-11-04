@@ -3,7 +3,7 @@ Description=deploymentManager
 After=syslog.target
 
 [Service]
-User=tcadminx
+User=jaschenk
 ExecStart=/opt/springboot/deploymentManager/deploymentManager.jar
 SuccessExitStatus=143
 

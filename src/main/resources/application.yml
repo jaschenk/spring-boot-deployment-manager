@@ -51,7 +51,7 @@ management:
 # Deployment Manager specifics
 deployment:
     manager:
-        owner: admin   # Unix User Account ...
+        owner: jaschenk   # Unix User Account ...
         sa:
             dir: /opt/springboot
 #

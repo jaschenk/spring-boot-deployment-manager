@@ -81,7 +81,7 @@ public class ServiceStatusFormatUtilTest {
                     "CPUSchedulingPriority=0 TimerSlackNSec=50000 CPUSchedulingResetOnFork=no NonBlocking=no StandardInput=null " +
                     "StandardOutput=journal StandardError=inherit TTYReset=no TTYVHangup=no " +
                     "TTYVTDisallocate=no SyslogPriority=30 SyslogLevelPrefix=yes SecureBits=0 " +
-                    "CapabilityBoundingSet=18446744073709551615 AmbientCapabilities=0 User=tcadminx " +
+                    "CapabilityBoundingSet=18446744073709551615 AmbientCapabilities=0 User=jaschenk " +
                     "MountFlags=0 PrivateTmp=no PrivateNetwork=no PrivateDevices=no ProtectHome=no ProtectSystem=no " +
                     "SameProcessGroup=no IgnoreSIGPIPE=yes NoNewPrivileges=no SystemCallErrorNumber=0 RuntimeDirectoryMode=0755 " +
                     "KillMode=control-group KillSignal=15 SendSIGKILL=yes SendSIGHUP=no Id=claimService.service " +

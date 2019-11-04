@@ -3,7 +3,7 @@ Description=eurekaServer
 After=syslog.target
 
 [Service]
-User=tcadminx
+User=jaschenk
 ExecStart=/opt/springboot/eureka/eurekaServer.jar
 SuccessExitStatus=143
 

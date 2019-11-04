@@ -45,7 +45,7 @@ Selecting **Stop**, will issue a ````systemctl stop <service name>```` command, 
 will stop an active running service.
 The current service status will be reflected on the service details page.
 
-####Clean
+#### Clean
 Selecting **clean**, will remove any files which have not been deployed from a previous
 upload.
 The current service status will be reflected on the service details page.

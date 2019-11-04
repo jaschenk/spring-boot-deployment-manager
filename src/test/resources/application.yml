@@ -53,7 +53,7 @@ management:
 # Deployment Manager specifics
 deployment:
     manager:
-        owner: tcadminx
+        owner: jaschenk
         sa:
             dir: ${java.io.tmpdir}/springboot-dm-test
 #
