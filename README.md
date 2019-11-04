@@ -2,12 +2,19 @@
 This Service Application named the Spring Boot Deployment Manager will provide a utility functions to all new versions of
 running Spring Boot Service instances to be deployed and maintained within a given environment. 
 
-The Deployment Manager runs on a well known port for our Enterprise at **8762**.  BUt can be overridden using statdard spring.port definition.
+The Deployment Manager runs on a well known port for our Enterprise at **8762**.  
+_But can be overridden using standard spring.port definition._
+
+This service provides utility services to compliment an existing deployment process or implement a deployment strategy for
+on premise cloud configuration and/or where existing deployment tools and processing are lacking for your service layer.
 
 ## Requirements
 * Java 8 or above
 * Maven
-* Linux using systemd process control
+* Linux using systemd process control, but can be modified to use any operating system's process control framework.
+
+### For Testing and Demonstration
+_You will need the following additional components to test and demonstrate the capabilities locally._
 * Spring Boot Eureka Service, can be found here:  https://github.com/jaschenk/spring-boot-eureka-service
 * Test Services, can be found here: https://github.com/jaschenk/spring-boot-test-service
 
@@ -33,11 +40,28 @@ Perform the following commands to setup your environment:
     sudo chown -R owner:owner /opt/springboot
 ```
 
-Now create an edit a configuration file for each:
+Now copy over a configuration file for each:
+```shell script
+    sudo cp -p <project_location_of_deploymentManager>/conf/eurekaServer.conf
+    sudo cp -p <project_location_of_deploymentManager>/conf/deploymentManager.conf
+    sudo cp -p <project_location_of_deploymentManager>/conf/testServiceA.conf
+    sudo cp -p <project_location_of_deploymentManager>/conf/testServiceB.conf
+    sudo cp -p <project_location_of_deploymentManager>/conf/testServiceC.conf
+```
+**_You may need to edit these files based upon location and owner of processes._**
 
-Now create the Linux systemd service file to define the service to the Operating System:
+Now copy the Linux systemd service file to define the service to the Operating System:
+```shell script
+    sudo cp -p <project_location_of_deploymentManager>/etc/eurekaServer.service
+    sudo cp -p <project_location_of_deploymentManager>/etc/deploymentManager.service
+    sudo cp -p <project_location_of_deploymentManager>/etc/testServiceA.service
+    sudo cp -p <project_location_of_deploymentManager>/etc/testServiceB.service
+    sudo cp -p <project_location_of_deploymentManager>/etc/testServiceC.service
+```
+**_You may need to edit these files based upon location and owner of processes._**
 
-Now copy in the JARs:
+
+Now copy in the JARs for the services:
 ````shell script
     sudo cp <build_location_of_eureka_JAR> /opt/springboot/eureka
     sudo cp <build_location_of_deploymentManager_JAR> /opt/springboot/deploymentManager

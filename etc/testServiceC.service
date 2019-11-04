@@ -1,0 +1,11 @@
+[Unit]
+Description=testServiceC
+After=syslog.target
+
+[Service]
+User=jaschenk
+ExecStart=/opt/springboot/testServiceC/testServiceC.jar
+SuccessExitStatus=143
+
+[Install]
+WantedBy=multi-user.target
