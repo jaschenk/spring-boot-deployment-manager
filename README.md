@@ -1,16 +1,70 @@
 # Spring Boot Deployment Manager
 This Service Application named the Spring Boot Deployment Manager will provide a utility functions to all new versions of
-running Spring Boot Service instances to be deployed and maintained.
+running Spring Boot Service instances to be deployed and maintained within a given environment. 
 
 The Deployment Manager runs on a well known port for our Enterprise at **8762**.  BUt can be overridden using statdard spring.port definition.
 
-## Upon running the Deployment Manager
+## Requirements
+* Java 8 or above
+* Maven
+* Linux using systemd process control
+* Spring Boot Eureka Service, can be found here:  https://github.com/jaschenk/spring-boot-eureka-service
+* Test Services, can be found here: https://github.com/jaschenk/spring-boot-test-service
+
+## Building
+Simply perform Maven goals clean and package
+```
+mvn clean package
+```
+
+## Setup
+Create an initial Spring Boot Services area to contain your services and service configuration.  
+For our example moving forward, we will be using the **/opt/springboot** high level directory to contain our 
+service definitions.
+
+Perform the following commands to setup your environment:
+```shell script
+    sudo mkdir /opt/springboot
+    sudo mkdir /opt/sprinboot/eureka
+    sudo mkdir /opt/springboot/deploymentManager
+    sudo mkdir /opt/springboot/testServiceA
+    sudo mkdir /opt/springboot/testServiceB
+    sudo mkdir /opt/springboot/testServiceC
+    sudo chown -R owner:owner /opt/springboot
+```
+
+Now create an edit a configuration file for each:
+
+Now create the Linux systemd service file to define the service to the Operating System:
+
+Now copy in the JARs:
+````shell script
+    sudo cp <build_location_of_eureka_JAR> /opt/springboot/eureka
+    sudo cp <build_location_of_deploymentManager_JAR> /opt/springboot/deploymentManager
+    sudo cp <build_location_of_testService_JAR> /opt/springboot/testServiceA
+    sudo cp <build_location_of_testService_JAR> /opt/springboot/testServiceB
+    sudo cp <build_location_of_testService_JAR> /opt/springboot/testServiceC
+````
+
+Finally edit the **sudoers** file to ensure the owner and user account is allowed to perform **sudo systemctl** 
+commands without hte need for a password.
+
+
+## Start up the Services
+Perform the following commands to start Eureka and the Deployment Manager:
+```shell script
+    sudo systemctl start eurekaServer.service
+    sudo systemctl starts deploymentManager.service
+```
+
+
+# Access the running Deployment Manager
 
 The Deployment Manager has several endpoints, these are:
 
 - Deployment Manager UI -- Available from your desktop browser
    - UI available at: **http://localhost:8762/deploymentManager/** 
-     is the Deployment Manager end point on Staging 2. 
+     is the Deployment Manager end point on localhost. 
    
 - Deployment Manager REST Interface -- Available for interfacing from Azure DevOps or other automation framework.
    - REST Interface available at: **http:/localhost:8762/deploymentManager/api/**    
@@ -137,6 +191,7 @@ layer for this Deployment Manager's UI and API facilities.
 ----
 ## Errata
 
+* No Security at this time.
 * Output formatting for Configuration can still yield ill formatted text.
 * No removal of Archive artifact files.  This would be a manual or scripted process.
 * During Deployment spinner overlay allows 'refresh' & 'services' buttons as active.
